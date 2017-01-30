@@ -1,3 +1,8 @@
 body {
-  padding: 20px;
+  min-width: 200px;
+}
+
+label {
+  clear: both;
+  display: block;
 }

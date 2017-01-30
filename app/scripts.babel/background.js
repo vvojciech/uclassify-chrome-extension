@@ -4,9 +4,6 @@ chrome.runtime.onInstalled.addListener(function (details) {
   console.log('previousVersion', details.previousVersion);
 });
 
-chrome.browserAction.setBadgeText({text: '\'Allo'});
-
-
 function getUrl(url, callback) {
   var request = new XMLHttpRequest();
   request.onreadystatechange = function () {

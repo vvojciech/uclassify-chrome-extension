@@ -37,7 +37,7 @@ function addText(label, text) {
     $div = $('<div>')
       .addClass('uclassify-content')
       .css({
-        background: 'white',
+        background: '#fffee8',
         position: 'fixed',
         top: 0,
         right: 0,

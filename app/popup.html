@@ -11,7 +11,32 @@
     <!-- endbuild -->
   </head>
   <body>
-    <h1>'Allo, 'Allo!</h1>
+    <h2>Classifiers</h2>
+
+    <label>
+      <input type="checkbox" name="classifier[]" value="prfekt/tonality">
+      Tonality
+    </label>
+    <label>
+      <input type="checkbox" name="classifier[]" value="uclassify/ageanalyzer">
+      Age
+    </label>
+    <label>
+      <input type="checkbox" name="classifier[]" value="uclassify/sentiment">
+      Sentiment
+    </label>
+    <label>
+      <input type="checkbox" name="classifier[]" value="uclassify/genderanalyzer_v5">
+      Gender
+    </label>
+    <label>
+      <input type="checkbox" name="classifier[]" value="prfekt/myers-briggs-attitude">
+      Myers-Briggs Attitude
+    </label>
+    <br />
+    <div id="status"></div>
+    <br />
+    <button id="save">Save</button>
 
     <!-- build:js scripts/popup-vendor.js -->
     <!-- bower:js -->
