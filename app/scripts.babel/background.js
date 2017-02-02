@@ -1,12 +1,12 @@
 'use strict';
 
-chrome.runtime.onInstalled.addListener(function (details) {
+chrome.runtime.onInstalled.addListener(details => {
   console.log('previousVersion', details.previousVersion);
 });
 
 function getUrl(url, callback) {
-  var request = new XMLHttpRequest();
-  request.onreadystatechange = function () {
+  const request = new XMLHttpRequest();
+  request.onreadystatechange = () => {
     if (request.readyState == 4 && request.status == 200) {
       callback(JSON.parse(request.responseText));
     }
@@ -17,12 +17,12 @@ function getUrl(url, callback) {
 
 
 function gender(text, key) {
-  getUrl('https://api.uclassify.com/v1/uclassify/genderanalyzer_v5/classify/?readKey=' + key + '&text=' + encodeURI(text),
-    function (result) {
-      chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+  getUrl(`https://api.uclassify.com/v1/uclassify/genderanalyzer_v5/classify/?readKey=${key}&text=${encodeURI(text)}`,
+    result => {
+      chrome.tabs.query({active: true, currentWindow: true}, tabs => {
         chrome.tabs.sendMessage(tabs[0].id, {
           action: 'add_gender', message: result
-        }, function (response) {
+        }, response => {
         });
       });
     })
@@ -30,48 +30,48 @@ function gender(text, key) {
 
 
 function sentiment(text, key) {
-  getUrl('https://api.uclassify.com/v1/uclassify/sentiment/classify/?readKey=' + key + '&text=' + encodeURI(text),
-    function (result) {
-      chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+  getUrl(`https://api.uclassify.com/v1/uclassify/sentiment/classify/?readKey=${key}&text=${encodeURI(text)}`,
+    result => {
+      chrome.tabs.query({active: true, currentWindow: true}, tabs => {
         chrome.tabs.sendMessage(tabs[0].id, {
           action: 'add_sentiment', message: result
-        }, function (response) {
+        }, response => {
         });
       });
     })
 }
 
 function age(text, key) {
-  getUrl('https://api.uclassify.com/v1/uclassify/ageanalyzer/classify/?readKey=' + key + '&text=' + encodeURI(text),
-    function (result) {
-      chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+  getUrl(`https://api.uclassify.com/v1/uclassify/ageanalyzer/classify/?readKey=${key}&text=${encodeURI(text)}`,
+    result => {
+      chrome.tabs.query({active: true, currentWindow: true}, tabs => {
         chrome.tabs.sendMessage(tabs[0].id, {
           action: 'add_age', message: result
-        }, function (response) {
+        }, response => {
         });
       });
     })
 }
 
 function myers_briggs_attitude(text, key) {
-  getUrl('https://api.uclassify.com/v1/prfekt/myers-briggs-attitude/classify/?readKey=' + key + '&text=' + encodeURI(text),
-    function (result) {
-      chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+  getUrl(`https://api.uclassify.com/v1/prfekt/myers-briggs-attitude/classify/?readKey=${key}&text=${encodeURI(text)}`,
+    result => {
+      chrome.tabs.query({active: true, currentWindow: true}, tabs => {
         chrome.tabs.sendMessage(tabs[0].id, {
           action: 'add_myers_briggs_attitude', message: result
-        }, function (response) {
+        }, response => {
         });
       });
     })
 }
 
 function tonality(text, key) {
-  getUrl('https://api.uclassify.com/v1/prfekt/tonality/classify/?readKey=' + key + '&text=' + encodeURI(text),
-    function (result) {
-      chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+  getUrl(`https://api.uclassify.com/v1/prfekt/tonality/classify/?readKey=${key}&text=${encodeURI(text)}`,
+    result => {
+      chrome.tabs.query({active: true, currentWindow: true}, tabs => {
         chrome.tabs.sendMessage(tabs[0].id, {
           action: 'add_tonality', message: result
-        }, function (response) {
+        }, response => {
         });
       });
     })
@@ -82,11 +82,11 @@ function getClassification(classifier, key, text) {
 }
 
 function uclassifyHandler(info) {
-  var text = info.selectionText
+  const text = info.selectionText;
 
   chrome.storage.sync.get({
     key: ''
-  }, function (items) {
+  }, items => {
 
     // TODO: add some validation for key
 

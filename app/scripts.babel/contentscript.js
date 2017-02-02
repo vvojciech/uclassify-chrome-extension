@@ -1,6 +1,6 @@
 'use strict';
 
-chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
   console.log(request);
   switch (request.action) {
     case 'add_gender':
@@ -32,7 +32,7 @@ chrome.extension.onMessage.addListener(function (request, sender, sendResponse) 
 
 
 function addText(label, text) {
-  var $div = $('body').find('.uclassify-content')
+  let $div = $('body').find('.uclassify-content');
   if ($div.length == 0) {
     $div = $('<div>')
       .addClass('uclassify-content')
@@ -47,6 +47,5 @@ function addText(label, text) {
     $div.appendTo('body');
   }
 
-  $('<div>').html(label + ': <b>' + text + '</b>').appendTo($div);
-
+  $('<div>').html(`${label}: <b>${text}</b>`).appendTo($div);
 }

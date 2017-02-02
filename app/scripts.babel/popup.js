@@ -3,10 +3,10 @@
 // Saves options to chrome.storage
 function save_options() {
 
-  var items =[]
-  var chk_arr = document.getElementsByName('classifier[]');
+  const items = [];
+  const chk_arr = document.getElementsByName('classifier[]');
 
-  for (var i = 0; i < chk_arr.length; i++) {
+  for (let i = 0; i < chk_arr.length; i++) {
     if (chk_arr[i].checked) {
       items.push(chk_arr[i].value)
     }
@@ -14,10 +14,10 @@ function save_options() {
 
   chrome.storage.sync.set({
     classifiers: items
-  }, function () {
-    var status = document.getElementById('status');
+  }, () => {
+    const status = document.getElementById('status');
     status.textContent = 'Classifiers saved.';
-    setTimeout(function () {
+    setTimeout(() => {
       status.textContent = '';
     }, 750);
   });
@@ -26,15 +26,13 @@ function save_options() {
 function restore_options() {
   chrome.storage.sync.get({
     classifiers: ''
-  }, function (items) {
+  }, items => {
 
-    var elements = null;
+    let elements = null;
 
-    for (var i = 0; i < items.classifiers.length; i++) {
+    for (let i = 0; i < items.classifiers.length; i++) {
       elements = document.querySelectorAll(
-        'input[type=\'checkbox\'][value=\''
-        + items.classifiers[i]
-        + '\']');
+        `input[type='checkbox'][value='${items.classifiers[i]}']`);
 
       if (elements && elements[0] && typeof elements[0] !== undefined) {
         elements[0].checked = true
