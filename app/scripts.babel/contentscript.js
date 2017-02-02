@@ -2,6 +2,10 @@
 
 chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
   console.log(request);
+  addGraph(request.classifier, request.message);
+  return;
+
+  // code below is probably to be deleted
   switch (request.classifier) {
     case 'uclassify/genderanalyzer_v5':
       addText('gender.male', request.message.male);
@@ -42,6 +46,51 @@ chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
+function addGraph(name, values) {
+
+  // Wrapper
+  const width = 500;
+  let $div = $('body').find('.uclassify-content');
+
+  if ($div.length == 0) {
+    $div = $('<div>')
+      .addClass('uclassify-content')
+      .css({
+        background: '#fffee8',
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        padding: '10px',
+        zIndex: 100000,
+      });
+    $div.appendTo('body');
+  }
+
+  // adding a graph
+  let $graph = $('<div>')
+    .css({
+      width: width + 10,
+      position: 'relative',
+      padding: 3
+    });
+
+  for (var key in values) {
+    var item = values[key];
+    let $bar = $('<div>')
+      .css({
+        height: 30,
+        backgroundColor: getRandomColor(),
+        width: Math.round(item * width) + 'px',
+        display: 'inline-block',
+        overflow: 'hidden',
+        fontSize: '11px'
+      })
+      .text('(' + Math.round(item * 100) + '%) ' + key);
+    $bar.appendTo($graph);
+  }
+
+  $graph.appendTo($div);
+}
 
 function addText(label, text) {
   let $div = $('body').find('.uclassify-content');
@@ -60,4 +109,14 @@ function addText(label, text) {
   }
 
   $('<div>').html(`${label}: <b>${text}</b>`).appendTo($div);
+}
+
+
+function getRandomColor() {
+  var letters = '9ABCDE';
+  var color = '#';
+  for (var i = 0; i < 6; i++ ) {
+    color += letters[Math.floor(Math.random() * ( letters.length))];
+  }
+  return color;
 }
